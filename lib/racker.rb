@@ -26,6 +26,12 @@ class Racker
     return show_page('menu') unless current_game
   end
 
+  def static_pages
+    return show_page(@request.path) unless current_game
+
+    check_game_existance
+  end
+
   def current_game
     @request.session[:game]
   end
