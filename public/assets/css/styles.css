@@ -62,3 +62,8 @@ input::-webkit-inner-spin-button {
 .scores {
   background: white;
 }
+
+.err {
+  font-size: 80pt;
+  font-weight: 800;
+}
