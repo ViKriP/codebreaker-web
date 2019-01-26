@@ -15,5 +15,9 @@ Number of minuses - 2 (second and fourth position)<br>
     • If codebreaker inputs the exact number as a secret number - codebreaker wins the game. If all attempts are spent - codebreaker loses.<br>
     • Codebreaker also has some number of hints(depends on chosen difficulty). If a user takes a hint - he receives back a separate digit of the secret code."
   home_page: 'Home'
-  name_app: 'Codebreaker'
-
+  name_app: 'Codebreaker 2019'
+  player_name: "Player's name:"
+  game_level:
+    easy: 'easy'
+    medium: 'medium'
+    hell: 'hell'

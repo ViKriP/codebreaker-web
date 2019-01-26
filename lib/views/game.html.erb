@@ -1,13 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" class="mdl-js">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link href="assets/favicon.ico" rel="icon">
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/styles.css" rel="stylesheet">
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
-    <title>Codebreaker Web</title>
+  <%= render "header" %>
   <body>
     <section id="introduction">
       <div class="container">
@@ -15,11 +8,11 @@
           <div class="col-12 col-md-6">
             <div class="row">
               <div class="col-md-auto">
-                <h1 class="text-white title">Codebreaker 2018</h1>
+                <h1 class="text-white title"><%= I18n.t(:name_app)%></h1>
               </div>
             </div>
             <p class="lead text-white-70">
-              Hello, test!
+              Hello, <%= current_player %>!
               Try to guess 4-digit number, that consists of numbers in a range from 1 to 6.
             </p>
             <hr class="mb-4">
@@ -28,27 +21,31 @@
                 <button type="button" class="btn btn-primary" disabled>
                   Level:
                   <span class="badge badge-light">
-                    Simple
+                    <%= current_game.difficulty_name %>
                   </span>
                 </button>
               </div>
               <div class="col text-center button">
                 <button type="button" class="btn btn-primary" disabled>
                   Attempts:
-                  <span class="badge badge-light">4</span>
+                  <span class="badge badge-light">
+                    <%= current_game.attempts_total %>
+                  </span>
                 </button>
               </div>
 
               <div class="col button">
                 <button type="button" class="btn btn-primary float-right">
                   Hints:
-                  <span class="badge badge-light">1</span>
+                  <span class="badge badge-light">
+                    <%= current_game.hints_total %>
+                  </span>
                 </button>
               </div>
             </div>
             <hr class="mb-4">
 
-            <form method="post" action="http://localhost:9292/submit_answer">
+            <form method="post" action="http://localhost:9292">
               <div class="form-group">
                 <input class="form-control guess_input" name="number" pattern="^[1-6]{4}$" placeholder="1234" required="" autocomplete="off">
               </div>
@@ -66,7 +63,7 @@
                 Submit
               </button>
               <a class="btn btn-warning btn-lg float-right" role="button">
-                Show hint!
+                Show hint! <%= destroy_session %>
                 <span class="badge badge-light">
                   6
                 </span>

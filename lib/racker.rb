@@ -24,6 +24,17 @@ class Racker
 
   def check_game_existance
     return show_page('menu') unless current_game
+
+    return show_page('game') if current_game.attempts_total.positive?
+
+    check_game_status
+  end
+
+  def check_game_status
+    return show_page('lose') if current_game.guess_loss
+
+    #Codebreaker::Storage.save(current_game)
+    show_page('win')
   end
 
   def static_pages
@@ -32,12 +43,30 @@ class Racker
     check_game_existance
   end
 
+  def start
+    level = Codebreaker::Difficulty.find(@request.params['level']).level
+
+    @request.session[:game] = Codebreaker::Game.new(level)
+    @request.session[:player] = @request.params['player_name']
+    @request.session[:hints] = []
+
+    show_page('game')
+  end
+
+  def current_player
+    @request.session[:player]
+  end
+
   def current_game
     @request.session[:game]
   end
 
-  def session_param_nil?(param)
+  def session_param?(param)
     @request.session[param].nil?
+  end
+
+  def destroy_session
+    @request.session.clear
   end
 
   def t(phrase, *args)
