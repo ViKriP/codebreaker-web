@@ -38,7 +38,7 @@
                 <button type="button" class="btn btn-primary float-right">
                   Hints:
                   <span class="badge badge-light">
-                    <%= current_game.hints_total %>
+                    <%= current_game.hints %>
                   </span>
                 </button>
               </div>
@@ -62,15 +62,18 @@
               <button type="submit" class="btn btn-primary btn-lg">
                 Submit
               </button>
-              <a class="btn btn-warning btn-lg float-right" role="button">
-                Show hint! <%= destroy_session %>
-                <span class="badge badge-light">
-                  6
-                </span>
-                <span class="badge badge-light">
-                  3
-                </span>
-              </a>
+            </form>
+
+            <form method="post" action="/exit" style="width: 68px;padding-top: -25;margin-top: -47px;margin-left: 160px;">
+            <button type="submit" class="btn btn-primary btn-lg">
+                Exit
+              </button>
+            </form>
+
+            <form method="post" action="/hint" class="btn-hints">
+              <button type="submit" class="btn btn-warning btn-lg float-right">
+                Show hint! <%= "<span class='badge badge-light'> #{current_game.level_hints.join(' ')} </span>" unless current_game.level_hints.empty? %>
+              </button>
             </form>
           </div>
         </div>

@@ -16,6 +16,7 @@ class Racker
     when '/game' then game
     when '/rules', '/statistics' then static_pages
     when '/hint' then hint
+    when '/exit' then quit
     else Rack::Response.new(render('404'), 404)
     end
   end
@@ -44,13 +45,24 @@ class Racker
   end
 
   def start
-    level = Codebreaker::Difficulty.find(@request.params['level']).level
+    level = Difficulty.find(@request.params['level']).level
 
     @request.session[:game] = Codebreaker::Game.new(level)
     @request.session[:player] = @request.params['player_name']
-    @request.session[:hints] = []
 
     show_page('game')
+  end
+
+  def hint
+    current_game.hint
+
+    show_page('game')
+  end
+
+  def quit
+    destroy_session
+
+    show_page('menu')
   end
 
   def current_player

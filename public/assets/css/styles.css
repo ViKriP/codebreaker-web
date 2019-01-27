@@ -67,3 +67,7 @@ input::-webkit-inner-spin-button {
   font-size: 80pt;
   font-weight: 800;
 }
+
+.btn-hints {
+  margin-top: -47px;
+}
