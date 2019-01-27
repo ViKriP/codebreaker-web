@@ -28,9 +28,9 @@ class Racker
   end
 
   def check_game_status
-    return lose if current_game.guess_loss
-
     return win if current_game.guess_won
+
+    return lose if current_game.guess_loss
 
     show_page('game')
   end
@@ -45,13 +45,14 @@ class Racker
     level = Difficulty.find(@request.params['level']).level
 
     @request.session[:game] = Codebreaker::Game.new(level)
-    @request.session[:player] = @request.params['player_name']
+    @request.session[:player] = current_game.secret_code#@request.params['player_name']
 
     show_page('game')
   end
 
   def game
     current_game.guess(@request.params['number'])
+    marks_view
     check_game_status
   end
 
@@ -73,6 +74,28 @@ class Racker
     current_game.hint
 
     show_page('game')
+  end
+
+  def marks(value)
+    case value
+    when '+' then { class: 'success', view: '+' }
+    when '-' then { class: 'primary', view: '-' }
+    else { class: 'danger', view: 'x' }
+    end
+  end
+
+  def marks_view
+    attempt_result = current_game.attempt_result
+    @marks_guess = []
+    puts attempt_result
+
+    if attempt_result.is_a?(Array)
+      marks_total = attempt_result.size
+      (1..4).each { |item|
+        marks_total >= item ? mark = marks(attempt_result[item-1]) : mark = marks('x')
+        @marks_guess.push("<button type='button' class='btn btn-#{mark[:class]} marks' disabled>#{mark[:view]}</button>")
+      }
+    end
   end
 
   def quit

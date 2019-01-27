@@ -35,7 +35,7 @@
               </div>
 
               <div class="col button">
-                <button type="button" class="btn btn-primary float-right">
+                <button type="button" class="btn btn-primary float-right" disabled>
                   Hints:
                   <span class="badge badge-light">
                     <%= current_game.hints %>
@@ -51,10 +51,7 @@
               </div>
               <div class="form-group guess_markers_list">
                 <div id="guess_marker">
-                  <button type="button" class="btn btn-success marks" disabled>+</button>
-                  <button type="button" class="btn btn-primary marks" disabled>-</button>
-                  <button type="button" class="btn btn-danger marks" disabled>x</button>
-                  <button type="button" class="btn btn-danger marks" disabled>x</button>
+                  <%= @marks_guess.join if @marks_guess %>
                 </div>
               </div>
               <hr class="mb-4">

@@ -22,13 +22,13 @@
               <button type="button" class="btn btn-primary" disabled>
                 Attempts Left:
                 <span class="badge badge-light">
-                  <%= current_game.attempts %>/<%= current_game.attempts_total %>
+                  <%= current_game.attempts_total-current_game.attempts %>/<%= current_game.attempts_total %>
                 </span>
               </button>
               <button type="button" class="btn btn-primary" disabled>
                 Hints Left:
                 <span class="badge badge-light">
-                  <%= current_game.hints %>/<%= current_game.hints_total %>
+                  <%= current_game.hints_total-current_game.hints %>/<%= current_game.hints_total %>
                 </span>
               </button>
             </div>
