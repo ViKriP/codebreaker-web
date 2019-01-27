@@ -26,38 +26,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
-                <tr>
-                  <th scope="row">4</th>
-                  <td>Player 1</td>
-                  <td>Middle</td>
-                  <td>8/10</td>
-                  <td>3/3</td>
-                  <td>2018.12.04 - 17:00:01</td>
-                </tr>
+                <% stats.each_with_index do |record, index|%>
+                  <%= "<tr><th scope='row'>#{index+1}</th>" %>
+                  <%= "<td>#{record[:name]}</td>" %>
+                  <%= "<td>#{record[:difficulty]}</td>" %>
+                  <%= "<td>#{record[:attempts_used]}/#{record[:attempts_total]}</td>" %>
+                  <%= "<td>#{record[:hints_used]}/#{record[:hints_total]}</td>" %>
+                  <%= "<td>#{record[:date]}</td></tr>" %>
+                <% end %>
               </tbody>
             </table>
           </div>

@@ -21,6 +21,14 @@ class Racker
     end
   end
 
+  def stats
+    db = Codebreaker::Storage.new.load
+
+    return false if db.size.zero?
+
+    db.sort_by! { |x| [x[:attempts_total], x[:attempts_used], x[:hints_used]] }
+  end
+
   private
 
   def main_menu
@@ -45,7 +53,7 @@ class Racker
     level = Difficulty.find(@request.params['level']).level
 
     @request.session[:game] = Codebreaker::Game.new(level)
-    @request.session[:player] = current_game.secret_code#@request.params['player_name']
+    @request.session[:player] = @request.params['player_name']
 
     show_page('game')
   end
@@ -58,8 +66,7 @@ class Racker
 
   def win
     Rack::Response.new(show_page('win')) do
-      #Codebreaker::Storage.save(current_game)
-      #@storage.save_game_result(start_game.to_h(user_name))
+      current_game.save_result_game(current_player)
       destroy_session
     end
   end
