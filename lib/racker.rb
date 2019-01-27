@@ -1,5 +1,5 @@
 class Racker
-  attr_reader :request, :game
+  attr_reader :request
 
   def self.call(env)
     new(env).response.finish
@@ -11,7 +11,7 @@ class Racker
 
   def response
     case @request.path
-    when '/', '/win', '/lose' then check_game_existance
+    when '/' then main_menu
     when '/start' then start
     when '/game' then game
     when '/rules', '/statistics' then static_pages
@@ -23,19 +23,16 @@ class Racker
 
   private
 
-  def check_game_existance
-    return show_page('menu') unless current_game
-
-    return show_page('game') if current_game.attempts_total.positive?
-
-    check_game_status
+  def main_menu
+    show_page('menu')
   end
 
   def check_game_status
-    return show_page('lose') if current_game.guess_loss
+    return lose if current_game.guess_loss
 
-    #Codebreaker::Storage.save(current_game)
-    show_page('win')
+    return win if current_game.guess_won
+
+    show_page('game')
   end
 
   def static_pages
@@ -51,6 +48,25 @@ class Racker
     @request.session[:player] = @request.params['player_name']
 
     show_page('game')
+  end
+
+  def game
+    current_game.guess(@request.params['number'])
+    check_game_status
+  end
+
+  def win
+    Rack::Response.new(show_page('win')) do
+      #Codebreaker::Storage.save(current_game)
+      #@storage.save_game_result(start_game.to_h(user_name))
+      destroy_session
+    end
+  end
+
+  def lose
+    Rack::Response.new(show_page('lose')) do
+      destroy_session
+    end
   end
 
   def hint
@@ -79,10 +95,6 @@ class Racker
 
   def destroy_session
     @request.session.clear
-  end
-
-  def t(phrase, *args)
-    I18n.t(phrase, *args)
   end
 
   def show_page(template)

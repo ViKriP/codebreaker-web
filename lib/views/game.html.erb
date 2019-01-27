@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-primary" disabled>
                   Attempts:
                   <span class="badge badge-light">
-                    <%= current_game.attempts_total %>
+                    <%= current_game.attempts %>
                   </span>
                 </button>
               </div>
@@ -45,7 +45,7 @@
             </div>
             <hr class="mb-4">
 
-            <form method="post" action="http://localhost:9292">
+            <form method="post" action="/game">
               <div class="form-group">
                 <input class="form-control guess_input" name="number" pattern="^[1-6]{4}$" placeholder="1234" required="" autocomplete="off">
               </div>
