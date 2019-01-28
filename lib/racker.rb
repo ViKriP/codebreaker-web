@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Racker
   attr_reader :request
 
@@ -16,7 +18,6 @@ class Racker
     when '/game' then game
     when '/rules', '/statistics' then static_pages
     when '/hint' then hint
-    when '/exit' then quit
     else Rack::Response.new(render('404'), 404)
     end
   end
@@ -32,6 +33,8 @@ class Racker
   private
 
   def main_menu
+    return show_page('game') if current_game
+
     show_page('menu')
   end
 
@@ -50,6 +53,8 @@ class Racker
   end
 
   def start
+    return show_page('game') if current_game
+
     level = Difficulty.find(@request.params['level']).level
 
     @request.session[:game] = Codebreaker::Game.new(level)
@@ -59,6 +64,9 @@ class Racker
   end
 
   def game
+    return show_page('menu') unless @request.session.key?(:player)
+    return show_page('game') unless @request.params['number']
+
     current_game.guess(@request.params['number'])
     marks_view
     check_game_status
@@ -78,6 +86,8 @@ class Racker
   end
 
   def hint
+    return show_page('menu') unless @request.session.key?(:player)
+
     current_game.hint
 
     show_page('game')
@@ -94,21 +104,15 @@ class Racker
   def marks_view
     attempt_result = current_game.attempt_result
     @marks_guess = []
-    puts attempt_result
 
-    if attempt_result.is_a?(Array)
-      marks_total = attempt_result.size
-      (1..4).each { |item|
-        marks_total >= item ? mark = marks(attempt_result[item-1]) : mark = marks('x')
-        @marks_guess.push("<button type='button' class='btn btn-#{mark[:class]} marks' disabled>#{mark[:view]}</button>")
-      }
+    return unless attempt_result.is_a?(Array)
+
+    marks_total = attempt_result.size
+    (1..4).each do |item|
+      mark = marks_total >= item ? marks(attempt_result[item - 1]) : marks('x')
+
+      @marks_guess.push("<button type='button' class='btn btn-#{mark[:class]} marks' disabled>#{mark[:view]}</button>")
     end
-  end
-
-  def quit
-    destroy_session
-
-    show_page('menu')
   end
 
   def current_player
@@ -117,10 +121,6 @@ class Racker
 
   def current_game
     @request.session[:game]
-  end
-
-  def session_param?(param)
-    @request.session[param].nil?
   end
 
   def destroy_session

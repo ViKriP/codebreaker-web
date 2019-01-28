@@ -14,7 +14,8 @@
           <p class="lead text-white-70"> Top of Players:</p>
           <hr class="mb-4">
           <div class="table-responsive-md scores">
-            <table class="table table-striped table table-sm">
+          <% if stats %>
+          <table class="table table-striped table table-sm">
               <thead>
                 <tr>
                   <th scope="col">#</th>
@@ -32,11 +33,12 @@
                   <%= "<td>#{record[:difficulty]}</td>" %>
                   <%= "<td>#{record[:attempts_used]}/#{record[:attempts_total]}</td>" %>
                   <%= "<td>#{record[:hints_used]}/#{record[:hints_total]}</td>" %>
-                  <%= "<td>#{record[:date]}</td></tr>" %>
+                  <%= "<td>#{record[:date].strftime("%Y.%m.%d - %H:%M:%S")}</td></tr>" %>
                 <% end %>
               </tbody>
             </table>
-          </div>
+            <% end %>
+            </div>
           <hr class="mb-4">
           <a class="btn btn-primary btn-lg" href="/" role="button">
                 <%= I18n.t(:home_page) %>
