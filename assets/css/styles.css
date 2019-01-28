@@ -44,6 +44,7 @@ input::-webkit-inner-spin-button {
 .guess_input {
   font-size: 72px;
   text-align: center;
+  height: 120px;
 }
 
 .guess_markers_list {
