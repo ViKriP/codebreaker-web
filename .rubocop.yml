@@ -8,3 +8,5 @@ Metrics/ModuleLength:
     - 'spec/**/*.rb'
 Documentation:
   Enabled: false
+Layout/EndOfLine:
+  Enabled: false
