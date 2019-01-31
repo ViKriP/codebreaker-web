@@ -22,14 +22,6 @@ class Racker
     end
   end
 
-  def stats
-    db = Codebreaker::Storage.new.load
-
-    return false if db.size.zero?
-
-    db.sort_by! { |x| [x[:attempts_total], x[:attempts_used], x[:hints_used]] }
-  end
-
   private
 
   def main_menu
@@ -48,8 +40,14 @@ class Racker
 
   def static_pages
     return show_page(@request.path) unless current_game
+  end
 
-    check_game_existance
+  def stats
+    db = Codebreaker::Storage.new.load
+
+    return false if db.size.zero?
+
+    db.sort_by! { |x| [x[:attempts_total], x[:attempts_used], x[:hints_used]] }
   end
 
   def start
@@ -64,7 +62,7 @@ class Racker
   end
 
   def game
-    return show_page('menu') unless @request.session.key?(:player)
+    return show_page('menu') unless session_present?
     return show_page('game') unless @request.params['number']
 
     current_game.guess(@request.params['number'])
@@ -80,13 +78,11 @@ class Racker
   end
 
   def lose
-    Rack::Response.new(show_page('lose')) do
-      destroy_session
-    end
+    Rack::Response.new(show_page('lose')) { destroy_session }
   end
 
   def hint
-    return show_page('menu') unless @request.session.key?(:player)
+    return show_page('menu') unless session_present?
 
     current_game.hint
 
@@ -121,6 +117,10 @@ class Racker
 
   def current_game
     @request.session[:game]
+  end
+
+  def session_present?
+    @request.session.key?(:player)
   end
 
   def destroy_session

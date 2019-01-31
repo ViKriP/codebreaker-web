@@ -1,9 +1,9 @@
 GIT
   remote: https://github.com/ViKriP/rg_codebreaker.git
-  revision: 9e1effe5bb02d219b16926ec6d5a74fb2145da59
+  revision: 830224e1129c29ffe63efcfd79618cda4450247d
   branch: develop
   specs:
-    codebreaker (0.1.0)
+    codebreaker (0.1.1)
       i18n
       terminal-table
 
@@ -19,7 +19,7 @@ GEM
     fasterer (0.4.1)
       colorize (~> 0.7)
       ruby_parser (~> 3.11.0)
-    i18n (1.5.2)
+    i18n (1.5.3)
       concurrent-ruby (~> 1.0)
     jaro_winkler (1.5.2)
     json (2.1.0)
@@ -48,7 +48,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.8.0)
     rspec-support (3.8.0)
-    rubocop (0.63.0)
+    rubocop (0.63.1)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
       parser (>= 2.5, != 2.5.1.1)
@@ -56,7 +56,7 @@ GEM
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (~> 1.4.0)
-    rubocop-rspec (1.31.0)
+    rubocop-rspec (1.32.0)
       rubocop (>= 0.60.0)
     ruby-progressbar (1.10.0)
     ruby_parser (3.11.0)

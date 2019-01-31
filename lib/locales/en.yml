@@ -21,3 +21,10 @@ Number of minuses - 2 (second and fourth position)<br>
     easy: 'easy'
     medium: 'medium'
     hell: 'hell'
+  short_rules: Try to guess 4-digit number, that consists of numbers in a range from 1 to 6.    
+  not_found: '404'
+  congratulations: 'You won the game!'
+  oops: 'You lose the game!'
+  marks_answer: "<button type='button'"
+  show_hint: "Show hint! <span class='badge badge-light'> 1 </span>"
+  top_player: 'Top of Players'
