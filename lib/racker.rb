@@ -103,9 +103,8 @@ class Racker
 
     return unless attempt_result.is_a?(Array)
 
-    marks_total = attempt_result.size
     (1..4).each do |item|
-      mark = marks_total >= item ? marks(attempt_result[item - 1]) : marks('x')
+      mark = attempt_result.size >= item ? marks(attempt_result[item - 1]) : marks('x')
 
       @marks_guess.push("<button type='button' class='btn btn-#{mark[:class]} marks' disabled>#{mark[:view]}</button>")
     end
