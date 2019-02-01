@@ -26,5 +26,5 @@ Number of minuses - 2 (second and fourth position)<br>
   congratulations: 'You won the game!'
   oops: 'You lose the game!'
   marks_answer: "<button type='button'"
-  show_hint: "Show hint! <span class='badge badge-light'> 1 </span>"
   top_player: 'Top of Players'
+  show_hint: "Show hint! <span class='badge badge-light'> 1 </span>"
