@@ -41,9 +41,7 @@ RSpec.describe Racker do
   end
 
   describe '#start' do
-    before do
-      post '/start', level: game.difficulty_name
-    end
+    before { post '/start', level: game.difficulty_name }
 
     context 'creates Game instance in session' do
       it { expect(last_request.session[:game]).not_to be nil }
@@ -88,9 +86,7 @@ RSpec.describe Racker do
 
   describe '#hint' do
     context "when doesn't session player" do
-      before do
-        env 'rack.session', game: game
-      end
+      before { env 'rack.session', game: game }
 
       it do
         post '/hint'
